@@ -1,14 +1,5 @@
 'use  strict';
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-
-var similarListElement = userDialog.querySelector('.setup-similar-list');
-
-var similarWizardTemplate = document
-  .querySelector('#similar-wizard-template')
-  .content.querySelector('.setup-similar-item');
-
 var NUMBERS_OF_WIZARDS = 4;
 var FIRST_NAMES_WIZARD = [
   'Иван',
@@ -39,6 +30,15 @@ var COAT_COLORS = [
   'rgb(0, 0, 0)'
 ];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+
+var userDialog = document.querySelector('.setup');
+userDialog.classList.remove('hidden');
+
+var similarListElement = userDialog.querySelector('.setup-similar-list');
+
+var similarWizardTemplate = document
+  .querySelector('#similar-wizard-template')
+  .content.querySelector('.setup-similar-item');
 
 var getRandomItemFromArray = function(array) {
   var index = Math.floor(Math.random() * array.length);
