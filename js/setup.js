@@ -30,6 +30,8 @@ var COAT_COLORS = [
   'rgb(0, 0, 0)'
 ];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
@@ -82,3 +84,79 @@ var createFragment = function(wizards) {
 createFragment(wizards);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+var setup = document.querySelector('.setup');
+var openSetup = function() {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onEscKeydown);
+};
+var closeSetup = function() {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onEscKeydown);
+};
+
+var onSetupOpenClick = function() {
+  openSetup();
+};
+var onSetupCloseClick = function() {
+  closeSetup();
+};
+
+var onSetupOpenEnterKeyDown = function(e) {
+  if (e.keyCode === ENTER_KEYCODE) {
+    openSetup();
+  }
+};
+var onEscKeydown = function(e) {
+  if (e.keyCode === ESC_KEYCODE && e.target !== setupUserName) {
+    closeSetup();
+  }
+};
+var onSetupWizardFormEnterKeyDown = function(e) {
+  if (e.keyCode === ENTER_KEYCODE && e.target === setupClose) {
+    closeSetup();
+  }
+};
+
+var setupOpen = document.querySelector('.setup-open');
+var setupWizardForm = document.querySelector('.setup-wizard-form');
+var setupUserName = setupWizardForm.querySelector('.setup-user-name');
+var setupClose = setupWizardForm.querySelector('.setup-close');
+
+document.addEventListener('keydown', onEscKeydown);
+setupOpen.addEventListener('click', onSetupOpenClick);
+setupOpen.addEventListener('keydown', onSetupOpenEnterKeyDown);
+setupClose.addEventListener('click', onSetupCloseClick);
+setupWizardForm.addEventListener('keydown', onSetupWizardFormEnterKeyDown);
+
+var wizardEyes = document
+  .querySelector('.setup-wizard')
+  .querySelector('.wizard-eyes');
+var wizardEyesInput = setupWizardForm.elements.namedItem('eyes-color');
+var fireballWrapInput = setupWizardForm.elements.namedItem('fireball-color');
+var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
+var onSetupFireballWrapClick = function() {
+  var color = getRandomItemFromArray([
+    '#ee4830',
+    '#30a8ee',
+    '#5ce6c0',
+    '#e848d5',
+    '#e6e848'
+  ]);
+  setupFireballWrap.style.background = color;
+  fireballWrapInput.value = color;
+};
+var onWizardEyesClick = function() {
+  var color = getRandomItemFromArray([
+    'black',
+    'red',
+    'blue',
+    'yellow',
+    'green'
+  ]);
+  wizardEyes.style.fill = color;
+  wizardEyesInput.value = color;
+};
+
+wizardEyes.addEventListener('click', onWizardEyesClick);
+setupFireballWrap.addEventListener('click', onSetupFireballWrapClick);
