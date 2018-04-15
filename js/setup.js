@@ -30,6 +30,7 @@ var COAT_COLORS = [
   'rgb(0, 0, 0)'
 ];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIREBALLS_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 
@@ -136,24 +137,12 @@ var wizardEyesInput = setupWizardForm.elements.namedItem('eyes-color');
 var fireballWrapInput = setupWizardForm.elements.namedItem('fireball-color');
 var setupFireballWrap = document.querySelector('.setup-fireball-wrap');
 var onSetupFireballWrapClick = function() {
-  var color = getRandomItemFromArray([
-    '#ee4830',
-    '#30a8ee',
-    '#5ce6c0',
-    '#e848d5',
-    '#e6e848'
-  ]);
+  var color = getRandomItemFromArray(FIREBALLS_COLORS);
   setupFireballWrap.style.background = color;
   fireballWrapInput.value = color;
 };
 var onWizardEyesClick = function() {
-  var color = getRandomItemFromArray([
-    'black',
-    'red',
-    'blue',
-    'yellow',
-    'green'
-  ]);
+  var color = getRandomItemFromArray(EYES_COLORS);
   wizardEyes.style.fill = color;
   wizardEyesInput.value = color;
 };
