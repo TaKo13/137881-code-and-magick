@@ -3,12 +3,19 @@ window.userDialog = (function() {
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
 
+  var MIN_BOTTOM_GAP = 200;
+
   var userDialog = document.querySelector('.setup');
   var dialogHandle = userDialog.querySelector('.upload');
+
   var userDialogOpen = document.querySelector('.setup-open');
   var userDialogClose = userDialog.querySelector('.setup-close');
 
   userDialog.classList.remove('hidden');
+
+  dialogHandle.addEventListener('click', function(e) {
+    e.preventDefault();
+  });
 
   var initialDialogPosition = {
     top: userDialog.offsetTop,
@@ -73,8 +80,29 @@ window.userDialog = (function() {
         y: moveEvt.clientY
       };
 
-      userDialog.style.top = userDialog.offsetTop - shift.y + 'px';
-      userDialog.style.left = userDialog.offsetLeft - shift.x + 'px';
+      var finalCoords = {
+        y: userDialog.offsetTop - shift.y,
+        x: userDialog.offsetLeft - shift.x
+      };
+
+      if (finalCoords.y < 0) {
+        finalCoords.y = 0;
+      }
+
+      if (finalCoords.y > window.innerHeight - MIN_BOTTOM_GAP) {
+        finalCoords.y = window.innerHeight - MIN_BOTTOM_GAP;
+      }
+
+      if (finalCoords.x < 0 + userDialog.clientWidth / 2) {
+        finalCoords.x = 0 + userDialog.clientWidth / 2;
+      }
+
+      if (finalCoords.x > window.innerWidth - userDialog.clientWidth / 2) {
+        finalCoords.x = window.innerWidth - userDialog.clientWidth / 2;
+      }
+
+      userDialog.style.top = finalCoords.y + 'px';
+      userDialog.style.left = finalCoords.x + 'px';
     };
 
     var onMouseUp = function(upEvt) {
